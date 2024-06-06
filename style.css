@@ -61,3 +61,34 @@ body {
   /* border: 4px solid darkslategray;  Optional: border color for visibility*/
   /* background: skyblue;  Optional: background color for visibility*/
 }
+
+.contact {
+  color: #A8A7A7;
+  /* border: 4px solid darkslategray;  Optional: border color for visibility*/
+  /* background: skyblue;  Optional: background color for visibility*/
+}
+
+a {
+  outline-color: transparent;
+  text-decoration: none;
+  padding: 1px 11px 0;
+}
+
+a:link {
+  color: #CC527A;
+}
+
+a:visited {
+  color: #CC527A;
+}
+
+a:focus,
+a:hover {
+  border: 1px solid;
+  padding: 1px 10px 0;
+  border-radius: 50px;
+}
+
+a:active {
+  color: #E8175D;
+}
