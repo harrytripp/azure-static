@@ -113,33 +113,43 @@ This project involves setting up a static website hosted on Azure Storage, enhan
 
 5. **Set Up Continuous Integration/Continuous Deployment (CI/CD)**
 
-   - Create GitHub Actions workflows to automate deployments:
+   - Create a GitHub Actions workflow to automate deployments of the website to Azure Blob storage:
 
      ```yaml
-     name: CI/CD Pipeline
+     name: Blob storage website CI
+     
      on:
-       push:
-         branches:
-           - main
+         push:
+             branches: [ main ]
+     
      jobs:
-       build-and-deploy:
+       build:
          runs-on: ubuntu-latest
          steps:
-           - name: Checkout code
-             uses: actions/checkout@v2
-           - name: Azure Login
-             uses: azure/login@v1
-             with:
+         - uses: actions/checkout@v3
+         - uses: azure/login@v1
+           with:
                creds: ${{ secrets.AZURE_CREDENTIALS }}
-           - name: Deploy Bicep
-             run: |
-               az deployment group create --resource-group myResourceGroup --template-file main.bicep
-           - name: Upload Static Website Content
-             run: |
-               az storage blob upload-batch -s ./website -d '$web' --account-name mystorageaccount --overwrite
+     
+         - name: Upload to blob storage
+           uses: azure/CLI@v1
+           with:
+             inlineScript: |
+                 az storage blob upload-batch --overwrite --account-name harrytrippcomassets --auth-mode login -d '$web' -s .
+         - name: Purge CDN endpoint
+           uses: azure/CLI@v1
+           with:
+             inlineScript: |
+                az cdn endpoint purge --content-paths  "/*" --profile-name "StaticCDN" --name "StaticEndpoint.azureedge.net" --resource-group "RG-Static-01"
+     
+       # Azure logout
+         - name: logout
+           run: |
+                 az logout
+           if: always()
      ```
 
-     [GitHub Actions Documentation](https://docs.github.com/en/actions/deployment/targeting-azure)
+     [GitHub Actions Documentation on Microsoft Learn](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-static-site-github-actions?tabs=userlevel) - I used a Service Principal for the deployment credentials.
 
 6. **Verify and Monitor**
 
