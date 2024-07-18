@@ -1,5 +1,5 @@
 # Azure-Based Static Website with CI/CD Pipeline
-### Creating my personal website: [harrytripp.com](https://www.harrytripp.com)
+Creating a platform for developing and hosting my personal website: **[harrytripp.com](https://www.harrytripp.com)**
 
 ## Overview
 
@@ -11,37 +11,39 @@ This project involves setting up a static website hosted on Azure Storage, enhan
 
 ## Features
 
-- **Static Website**: Hosted on Azure Storage using HTML and CSS.
-- **HTTPS Security**: Implemented using Azure CDN and DNS configuration with Cloudflare.
+- **Static Website**: Hosted on an Azure Storage Blob, coded using HTML and CSS.
+- **HTTPS Security**: Implemented using Azure CDN and Cloudflare DNS.
 - **Infrastructure as Code (IaC)**: Automated infrastructure setup with Bicep.
 - **CI/CD Pipeline**: Continuous integration and deployment set up with GitHub Actions.
 
 ## Technologies Used
 
-- **HTML**
-- **CSS**
+- **Bicep**
+- **GitHub Actions**
 - **Azure Storage**
 - **Azure CDN**
 - **Cloudflare DNS**
-- **Bicep**
-- **GitHub Actions**
+- **Visual Studio Code**
+- **HTML & CSS**
 
 ## Getting Started
 
 ### Prerequisites
 
-- Azure Subscription
+- Azure Subscription with a Resource Group
 - GitHub Account with a repository to store your website content
 - Visual Studio Code with GitHub Codespaces extension
 
 ### Setup Instructions
 
-2. **Set Up GitHub Codespaces in VS Code to work directly in you website repository.**
+1. **Set Up GitHub Codespaces in VS Code to work directly in you website repository.**
    Follow [this guide](https://docs.github.com/en/codespaces/developing-in-a-codespace/using-github-codespaces-in-visual-studio-code) to set up Codespaces in VSCode.
 
-3. **Create and Configure Azure Resources Using Bicep**
+2. **Create and Configure Azure Resources Using Bicep**
 
-   - [**Azure Storage Account for Static Website**](https://github.com/harrytripp/bicep/tree/9125cf52f740baed65e04cca998316cca84b456d/Storage%20Account%20with%20Static%20Website)
+   I have split each stage of [this Bicep file](https://github.com/harrytripp/bicep/tree/9125cf52f740baed65e04cca998316cca84b456d/CDN%20with%20Storage%20Account%20and%20Static%20Website) which I developed into sections below, explaining each step.
+
+   1. **Set parameters and variables**
 
      ```bicep
       // Enabling static website hosting isn't possible directly in Bicep or an ARM template,
@@ -76,9 +78,9 @@ This project involves setting up a static website hosted on Azure Storage, enhan
       
       // Gets the web endpoint of the static website.
       var storageAccountHostName = replace(replace(storageAccount.properties.primaryEndpoints.web, 'https://', ''), '/', '')
-      
-
       ```
+
+   2. **Create storage account**
 
       ```bicep
       resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
@@ -97,7 +99,8 @@ This project involves setting up a static website hosted on Azure Storage, enhan
         }
       }
       ```
-
+      
+   3. **Create a managed identity with using the Storage Account Contributer role to allow the deployment of a PowerShell script to enable the Static Website**
       ```bicep
       resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
         scope: subscription()
@@ -121,18 +124,9 @@ This project involves setting up a static website hosted on Azure Storage, enhan
       }
       ```
 
+   4. **When the role assignment has applied, deploy the PowerShell script to the Storage Account**
       ```bicep
-      resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
-        name: 'deploymentScript'
-        location: location
-        kind: 'AzurePowerShell'
-        identity: {
-          type: 'UserAssigned'
-          userAssignedIdentities: {
-            '${managedIdentity.id}': {}
-          }
-        }
-        dependsOn: [
+      dependsOn: [
           // To ensure we wait for the role assignment to be deployed before trying to access the storage account
           roleAssignment
         ]
@@ -169,11 +163,8 @@ This project involves setting up a static website hosted on Azure Storage, enhan
         }
       }
       ```
-   
-        [Azure Storage Account Documentation](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-host)
-   
-      - **Azure CDN Profile and Endpoint**
-   
+         
+   5. **Create the Azure CDN Profile and its Endpoint**
         ```bicep
         resource cdnProfile 'Microsoft.Cdn/profiles@2024-02-01' = {
            name: profileName
@@ -217,15 +208,13 @@ This project involves setting up a static website hosted on Azure Storage, enhan
            }
          }
         ```
-   
-        [Azure CDN Documentation](https://learn.microsoft.com/en-us/azure/cdn/cdn-create-a-storage-account-with-cdn)
-   
-      - **Cloudflare DNS Configuration**
+
+3. **Cloudflare DNS Configuration**
    
         Follow the steps outlined in the [Cloudflare DNS documentation](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-custom-domain-name?tabs=azure-portal) to configure your CNAME record to point to the Azure CDN endpoint and set SSL/TLS to "Full (Strict)".
    
-   5. **Set Up Continuous Integration/Continuous Deployment (CI/CD)**
-   
+4. **Set Up Continuous Integration/Continuous Deployment (CI/CD)**
+      - Create your secret key...
       - Create a GitHub Actions workflow to automate deployments of the website to Azure Blob storage:
    
         ```yaml
@@ -262,9 +251,7 @@ This project involves setting up a static website hosted on Azure Storage, enhan
               if: always()
      ```
 
-     [GitHub Actions Documentation on Microsoft Learn](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-static-site-github-actions?tabs=userlevel) - I used a Service Principal for the deployment credentials.
-
-6. **Verify and Monitor**
+5. **Verify and Monitor**
 
    - Test your static website to ensure it is functioning correctly.
    - Regularly monitor Azure and Cloudflare for any issues.
@@ -275,6 +262,7 @@ This project involves setting up a static website hosted on Azure Storage, enhan
 - [Azure CDN with Custom Domain](https://learn.microsoft.com/en-us/azure/cdn/cdn-storage-custom-domain-https)
 - [GitHub Actions for Azure](https://docs.github.com/en/actions/deployment/targeting-azure)
 - [Cloudflare SSL/TLS Settings](https://developers.cloudflare.com/ssl/)
+- [Cloudflare DNS](https://developers.cloudflare.com/dns/)
 
 ## Conclusion
 
@@ -284,6 +272,7 @@ This project provided hands-on experience with Azure services, from hosting a st
 
 - [Microsoft Learn](https://learn.microsoft.com/en-us/training/azure/)
 - [GitHub Documentation](https://docs.github.com/)
+- [Cloudflare Documentation](https://developers.cloudflare.com/)
 
 ## License
 
