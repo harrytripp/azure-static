@@ -7,7 +7,7 @@ This project involves setting up a static website hosted on Azure Storage, enhan
 
 ## Architecture
 
-![Architecture Diagram](https://github.com/harrytripp/azure-static/blob/56ebff1fa552a4fba7f774beef777b052347221c/assets/readme/Static%20Website%20Architecture%20Diagram.png)
+![Architecture Diagram](https://github.com/harrytripp/azure-static/blob/92e3f68b4f9bdfe754a0793ced8da9a452546285/assets/readme/Static%20Website%20Architecture%20Diagram.png)
 
 ## Features
 
