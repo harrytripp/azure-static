@@ -3,7 +3,7 @@ Creating a platform for developing and hosting my personal website: **[harrytrip
 
 ## Overview
 
-This project involves setting up a static website hosted on Azure Storage, enhanced with CDN for performance and security, and integrated with a CI/CD pipeline using GitHub Actions. Infrastructure is deployed and managed using Bicep.
+This project involves setting up a static website hosted on Azure Storage, enhanced with CDN for performance and security, and integrated with a CI/CD pipeline using GitHub Actions. Infrastructure is deployed and managed using Bicep. I chose Cloudflare as my DNS provider.
 
 ## Architecture
 
@@ -295,7 +295,7 @@ This project involves setting up a static website hosted on Azure Storage, enhan
 
 ## Conclusion
 
-This project provided hands-on experience with Azure services, from hosting a static website to implementing a secure and efficient CI/CD pipeline. It enhanced my understanding of cloud infrastructure and automation, emphasizing best practices in deployment and security.
+This project provided hands-on experience with Azure services, from hosting a static website to programatically deploying resources using Bicep IaC. It involved implementing a secure and efficient CI/CD pipeline to streamline development. It enhanced my understanding of cloud infrastructure and automation, emphasising best practices in deployment and security as outlined in official documentation.
 
 ## Acknowledgements
 
