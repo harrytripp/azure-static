@@ -241,9 +241,9 @@ This project involves setting up a static website hosted on Azure Storage, enhan
    Follow the steps outlined in the [Cloudflare DNS documentation](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-custom-domain-name?tabs=azure-portal) to configure your CNAME record to point to the Azure CDN endpoint.
    Be aware that you cannot use your root/apex domain (example.com) so you will need to create a subdomain to use instead (www.example.com). This is because Cloudflare uses [CNAME flattening](https://developers.cloudflare.com/dns/cname-flattening).
    
-6. **Set Up Continuous Integration/Continuous Deployment (CI/CD)**
-      - Create your secret key...
-      - Create a GitHub Actions workflow to automate deployments of the website to Azure Blob storage:
+5. **Set Up Continuous Integration/Continuous Deployment (CI/CD)**
+      1. It is important that you do not commit credentials directly to your source control of choice, as they can be taken advantage of by bad actors. Therefore, we will set up a secret to contain your Azure Credentials. Follow the steps explained in [this Microsoft Learn article](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-static-site-github-actions?tabs=userlevel).
+      2. Create a GitHub Actions workflow to automate deployments of the website to Azure Blob storage:
    
         ```yaml
         name: Blob storage website CI
@@ -277,11 +277,12 @@ This project involves setting up a static website hosted on Azure Storage, enhan
               run: |
                     az logout
               if: always()
-     ```
+        ```
 
-7. **Verify and Monitor**
+6. **Verify and Monitor**
 
    - Test your static website to ensure it is functioning correctly.
+   - Ensure your GitHub Actions workflow is operating as expected.
    - Regularly monitor Azure and Cloudflare for any issues.
 
 ## Additional Resources
