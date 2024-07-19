@@ -5,6 +5,8 @@ Creating a platform for developing and hosting my personal website: **[harrytrip
 
 This project involves setting up a static website hosted on Azure Storage, enhanced with CDN for performance and security, and integrated with a CI/CD pipeline using GitHub Actions. Infrastructure is deployed and managed using Bicep. I chose Cloudflare as my DNS provider.
 
+This document breaks down the code from [this repository](https://github.com/harrytripp/bicep/tree/9125cf52f740baed65e04cca998316cca84b456d/CDN%20with%20Storage%20Account%20and%20Static%20Website) and as such the code snippets are not written as templates.
+
 ## Architecture
 
 ![Architecture Diagram](https://github.com/harrytripp/azure-static/blob/92e3f68b4f9bdfe754a0793ced8da9a452546285/assets/readme/Static%20Website%20Architecture%20Diagram.png)
@@ -18,15 +20,22 @@ This project involves setting up a static website hosted on Azure Storage, enhan
 
 ## Technologies Used
 
-- **Bicep**
-- **GitHub Actions**
-- **Azure Storage**
-- **Azure CDN**
-- **Cloudflare DNS**
-- **Visual Studio Code**
-- **HTML & CSS**
+🦾 **Bicep**
 
-## Getting Started
+⚙ **GitHub Actions**
+
+💾 **Azure Storage**
+
+🌐 **Azure CDN**
+
+☁ **Cloudflare DNS**
+
+🔷 **Visual Studio Code**
+
+⌨ **HTML & CSS**
+
+
+## Creation, Configuration and Deployment
 
 ### Prerequisites
 
@@ -295,7 +304,7 @@ This project involves setting up a static website hosted on Azure Storage, enhan
 
 ## Conclusion
 
-This project provided hands-on experience with Azure services, from hosting a static website to programatically deploying resources using Bicep IaC. It involved implementing a secure and efficient CI/CD pipeline to streamline development. It enhanced my understanding of cloud infrastructure and automation, emphasising best practices in deployment and security as outlined in official documentation.
+This project provided hands-on experience with Azure services, from hosting a static website to programmatically deploying resources using Bicep IaC. It involved implementing a secure and efficient CI/CD pipeline to streamline development. It enhanced my understanding of cloud infrastructure and automation, emphasising best practices in deployment and security as outlined in official documentation.
 
 ## Acknowledgements
 
