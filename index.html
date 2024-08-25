@@ -11,15 +11,26 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
     <div class="flex-container">
       <div class="intro">
-        <div class="greeting"><h1>Hi, I'm <font color="#CC527A">Harry</font></h1></div>
+        <div class="greeting"><h1>Hi, I'm <font class="harry">Harry</font></h1></div>
         <div class="tagline"><h2>An IT Professional interested in networking and cloud.</h2></div>
-		<div class="contact"><h3><a href="https://www.linkedin.com/in/harrytripp">LinkedIn</a> | <a href="https://github.com/harrytripp">GitHub</a></h3></div>
+		    <div class="contact"><h3><a href="https://www.linkedin.com/in/harrytripp">LinkedIn</a> | <a href="https://github.com/harrytripp">GitHub</a></h3></div>
+        
+        <button onclick="toggleDarkMode()">Toggle dark mode</button>
+        
       </div>
     </div>
+
+    <script>
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+      }
+    </script>
 </body>
 </html>
