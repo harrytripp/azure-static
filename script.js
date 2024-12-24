@@ -14,16 +14,7 @@ function toggleDarkMode() {
     }
 }
 
-function animateIcons(fromIcon, toIcon) {
-    fromIcon.style.opacity = 0;
-
-    setTimeout(() => {
-        fromIcon.style.display = 'none';
-        toIcon.style.display = 'block';
-        toIcon.style.opacity = 0;
-        
-        requestAnimationFrame(() => {
-        toIcon.style.opacity = 1;
-        });
-    }, 300);
+function animateIcons(hideIcon, showIcon) {
+    hideIcon.style.display = 'none';
+    showIcon.style.display = 'block';
 }
