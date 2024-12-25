@@ -8,9 +8,9 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 
     if (document.body.classList.contains('dark-mode')) {
-        animateIcons(iconSun, iconMoon);
-    } else {
         animateIcons(iconMoon, iconSun);
+    } else {
+        animateIcons(iconSun, iconMoon);
     }
 }
 

@@ -126,10 +126,5 @@ button {
 .icon {
   width: 24px;
   height: 24px;
-  transition: opacity 0.1s ease-in-out;
-  color: #E8175D;
-}
-
-svg {
-  color: #00aeff;
+  fill: var(--text-color);
 }
