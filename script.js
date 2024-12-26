@@ -1,6 +1,6 @@
 const darkModeToggle = document.getElementById('darkModeToggle');
-const iconSun = document.getElementById('iconSun');
 const iconMoon = document.getElementById('iconMoon');
+const iconSun = document.getElementById('iconSun');
 
 darkModeToggle.addEventListener('click', toggleDarkMode);
 
