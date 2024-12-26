@@ -1,31 +1,44 @@
 name: Blob storage website CI
 
 on:
-    push:
-        branches: [ main ]
+  push:
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: azure/login@v1
-      with:
+      - uses: actions/checkout@v3
+
+      - name: Create deploy directory
+        run: mkdir deploy
+
+      - name: Copy files to deploy directory
+        run: |
+          cp index.html deploy/
+          cp 404.html deploy/
+          cp styles.css deploy/
+          cp script.js deploy/
+          cp assets/favicon/* deploy/assets/favicon/
+
+      - uses: azure/login@v1
+        with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Upload to blob storage
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            cd deploy
             az storage blob upload-batch --overwrite --account-name harrytrippcomassets --auth-mode login -d '$web' -s .
-    - name: Purge CDN endpoint
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-           az cdn endpoint purge --content-paths  "/*" --profile-name "StaticCDN" --name "StaticEndpoint.azureedge.net" --resource-group "RG-Static-01"
 
-  # Azure logout
-    - name: logout
-      run: |
-            az logout
-      if: always()
+      - name: Purge CDN endpoint
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az cdn endpoint purge --content-paths "/*" --profile-name "StaticCDN" --name "StaticEndpoint.azureedge.net" --resource-group "RG-Static-01"
+
+      - name: logout
+        run: |
+          az logout
+        if: always()
