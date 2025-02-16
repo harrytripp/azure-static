@@ -45,7 +45,7 @@ This document breaks down the code from [this repository](https://github.com/har
 
 ### Setup Instructions
 
-1. **Set Up GitHub Codespaces in VS Code to work directly in you website repository.**
+1. **Set Up GitHub Codespaces in VS Code to work directly in your website repository.**
 
    Follow [this guide](https://docs.github.com/en/codespaces/developing-in-a-codespace/using-github-codespaces-in-visual-studio-code) to set up Codespaces in VSCode.
 
